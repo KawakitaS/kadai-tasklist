@@ -72,6 +72,7 @@ class TasksController extends Controller
      */
     public function show($id)
     {
+        if (\Auth::check()) {
         $task = Task::find($id);
         $user = \Auth::user();
         if ($task->user_id === \Auth::user()->id) {
@@ -80,9 +81,9 @@ class TasksController extends Controller
                 ]);
             } else {
             // 閲覧不可能
-            return redirect('/');
-                
+            return redirect('auth.login');
             }
+        }
     }
 
     /**
